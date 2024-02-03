@@ -18,6 +18,11 @@ export function SubmittableTextArea({
 }) {
   let [text, setText] = useState(initialText);
 
+  function submit() {
+    setText("");
+    onSubmit(text);
+  }
+
   return (
     <div
       className={`${styles.container} ${
@@ -28,12 +33,18 @@ export function SubmittableTextArea({
         className={`${styles.input}`}
         value={text}
         onInput={(e) => setText((e.target as HTMLTextAreaElement).value)}
+        onKeyDown={(e) => {
+          console.log(e);
+          if (e.key === "Enter" && e.ctrlKey) {
+            submit();
+          }
+        }}
         placeholder={placeholder}
       />
       <button
         className={`${styles.button}`}
         disabled={text.length === 0}
-        onClick={() => onSubmit(text)}
+        onClick={() => submit()}
       >
         {buttonText}
       </button>
