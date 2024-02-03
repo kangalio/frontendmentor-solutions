@@ -1,0 +1,20 @@
+.replybox {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: stretch;
+}
+
+.replyline {
+  width: 2px;
+  background-color: #eaecf1;
+  margin-left: 44px;
+  margin-right: 44px;
+}
+
+.replies {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}

@@ -1,0 +1,52 @@
+.container {
+  /* To make it grow properly in parent container */
+  flex-grow: 1;
+  width: 100%;
+
+  display: flex;
+  gap: 16px;
+  &.horizontal {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  &.vertical {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+
+.input {
+  flex-grow: 1;
+  width: 100%;
+  min-height: 96px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font: inherit;
+  color: #67727eff;
+  border-radius: 8px;
+  border: 1px solid #eaecf1;
+  resize: vertical;
+}
+
+.button {
+  border: none;
+  font: inherit;
+
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-radius: 8px;
+  background-color: #5457b6;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
