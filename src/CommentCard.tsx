@@ -79,7 +79,7 @@ export function CommentCard({
                     </div>
                     <div
                       className={styles.actionedit}
-                      onClick={() => setEditMode(true)}
+                      onClick={() => setEditMode(!editMode)}
                     >
                       <img className={styles.editicon} src={editIcon} alt="" />
                       <span className={styles.edittext}>Edit</span>
