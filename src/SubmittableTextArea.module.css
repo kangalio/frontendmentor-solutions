@@ -46,7 +46,7 @@
   align-items: center;
   cursor: pointer;
 
-  &:disabled {
+  &:hover {
     opacity: 0.5;
   }
 }
