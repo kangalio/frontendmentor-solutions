@@ -53,65 +53,57 @@ export function CommentCard({
               <img src={minusIcon} alt="downvote" />
             </div>
           </div>
-          <div className={styles.notvotebox}>
-            <div className={styles.topbar}>
-              <div className={styles.topbarleft}>
-                <img className={styles.avatar} src={avatar} alt="" />
-                <div className={styles.usernameGroup}>
-                  <span className={styles.username}>{username}</span>
-                  {isSelf ? <span className={styles.you}>you</span> : ""}
-                </div>
-                <span className={styles.createdat}>{age}</span>
-              </div>
-              <div className={styles.actions}>
-                {isSelf ? (
-                  <>
-                    <div
-                      className={styles.actiondelete}
-                      onClick={() => setDeleteConfirmDialogOpen(true)}
-                    >
-                      <img
-                        className={styles.deleteicon}
-                        src={deleteIcon}
-                        alt=""
-                      />
-                      <span className={styles.deletetext}>Delete</span>
-                    </div>
-                    <div
-                      className={styles.actionedit}
-                      onClick={() => setEditMode(!editMode)}
-                    >
-                      <img className={styles.editicon} src={editIcon} alt="" />
-                      <span className={styles.edittext}>Edit</span>
-                    </div>
-                  </>
-                ) : (
-                  <div
-                    className={styles.actionreply}
-                    onClick={() => setReplyCardOpen(!replyCardOpen)}
-                  >
-                    <img className={styles.replyicon} src={replyIcon} alt="" />
-                    <span className={styles.replytext}>Reply</span>
-                  </div>
-                )}
-              </div>
+          <div className={styles.topbarleft}>
+            <img className={styles.avatar} src={avatar} alt="" />
+            <div className={styles.usernameGroup}>
+              <span className={styles.username}>{username}</span>
+              {isSelf ? <span className={styles.you}>you</span> : ""}
             </div>
-            {editMode ? (
-              <SubmittableTextArea
-                className={styles.editinput}
-                initialText={text}
-                buttonText={"UPDATE"}
-                placeholder="Edit comment..."
-                flowVertical={true}
-                onSubmit={(editedText) => {
-                  setEditMode(false);
-                  setText(editedText);
-                }}
-              />
+            <span className={styles.createdat}>{age}</span>
+          </div>
+          <div className={styles.actions}>
+            {isSelf ? (
+              <>
+                <div
+                  className={styles.actiondelete}
+                  onClick={() => setDeleteConfirmDialogOpen(true)}
+                >
+                  <img className={styles.deleteicon} src={deleteIcon} alt="" />
+                  <span className={styles.deletetext}>Delete</span>
+                </div>
+                <div
+                  className={styles.actionedit}
+                  onClick={() => setEditMode(!editMode)}
+                >
+                  <img className={styles.editicon} src={editIcon} alt="" />
+                  <span className={styles.edittext}>Edit</span>
+                </div>
+              </>
             ) : (
-              <div className={styles.text}>{text}</div>
+              <div
+                className={styles.actionreply}
+                onClick={() => setReplyCardOpen(!replyCardOpen)}
+              >
+                <img className={styles.replyicon} src={replyIcon} alt="" />
+                <span className={styles.replytext}>Reply</span>
+              </div>
             )}
           </div>
+          {editMode ? (
+            <SubmittableTextArea
+              className={styles.content + " " + styles.editinput}
+              initialText={text}
+              buttonText={"UPDATE"}
+              placeholder="Edit comment..."
+              flowVertical={true}
+              onSubmit={(editedText) => {
+                setEditMode(false);
+                setText(editedText);
+              }}
+            />
+          ) : (
+            <div className={styles.content + " " + styles.text}>{text}</div>
+          )}
         </div>
         {replyCardOpen ? (
           <AddComment
