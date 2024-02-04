@@ -10,6 +10,11 @@
   background-color: #eaecf1;
   margin-left: 44px;
   margin-right: 44px;
+
+  @media screen and (max-width: 600px) {
+    margin-left: 0;
+    margin-right: 24px;
+  }
 }
 
 .replies {

@@ -11,58 +11,82 @@
   padding: 24px;
 
   display: grid;
-  grid-template-rows: 1fr auto;
+  gap: 24px;
+  grid-template-rows: auto 1fr;
   grid-template-columns: auto 1fr auto;
   grid-template-areas:
     "votebox topbarleft actions"
     "votebox content    content";
-  gap: 24px;
+
+  @media screen and (max-width: 600px) {
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "topbarleft topbarleft"
+      "content content"
+      "votebox actions";
+  }
 
   .votebox {
     grid-area: votebox;
-    
+
     background-color: #f5f6fa;
-  
+
     width: 40px;
     height: 100px;
-  
+
     border-radius: 10px;
     overflow: hidden;
-  
+
     display: flex;
     flex-direction: column;
     align-items: center;
-  
+
+    @media screen and (max-width: 600px) {
+      flex-direction: row;
+      width: 100px;
+      height: 40px;
+    }
+
     > * {
       width: 100%;
       flex-grow: 1;
       flex-basis: 0;
-  
+
       display: flex;
       justify-content: center;
       align-items: center;
     }
-  
+
     .upvote,
     .downvote {
       cursor: pointer;
       height: 40px;
+      color: #c5c6ef;
+      &:hover {
+        color: #5457b6;
+      }
+    }
+
+    .votes {
+      font-weight: 500;
+      color: #5457b6;
     }
   }
-  
+
   .topbarleft {
     grid-area: topbarleft;
-  
+
     display: flex;
     flex-direction: row;
     gap: 16px;
     align-items: center;
-  
+
     .username {
       color: #324152;
       font-weight: 500;
     }
-    
+
     .you {
       margin-left: 6px;
       padding-left: 6px;
@@ -75,44 +99,48 @@
       font-weight: 500;
       font-size: 14px;
     }
-    
+
     .avatar {
       height: 32px;
     }
   }
-  
+
   .actions {
     grid-area: actions;
-  
+
     display: flex;
     flex-direction: row;
     gap: 24px;
     > * {
       cursor: pointer;
       font-weight: 500;
-  
+
       display: flex;
       flex-direction: row;
       gap: 8px;
       align-items: center;
+
+      &:hover {
+        opacity: 0.5;
+      }
     }
-  
+
     .actionreply {
       color: #5457b6;
     }
-    
+
     .actiondelete {
       color: #ed6368;
     }
-    
+
     .actionedit {
       color: #5457b6;
     }
   }
-  
+
   .content {
     grid-area: content;
-    
+
     &.editgroup {
       width: 100%;
       display: flex;
@@ -123,6 +151,19 @@
   }
 }
 
-@media screen and (max-width: 600px) {
-
-}
+/* @media screen and (max-width: 600px) {
+  .comment {
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "topbarleft topbarleft"
+      "content content"
+      "votebox actions";
+    
+    .votebox {
+      flex-direction: row;
+      width: 100px;
+      height: 40px;
+    }
+  }
+} */
