@@ -1,11 +1,20 @@
-import dataJson_ from "./data.json";
+import dataJsonLocal from "./data.json";
 import styles from "./CommentSection.module.css";
 import { CommentChain } from "./CommentChain";
 import { AddComment } from "./AddComment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { DataJson } from "./commentJson";
 
 export default function App() {
-  let [dataJson, setDataJson] = useState(dataJson_);
+  let dataJsonLocalStorage = localStorage.getItem("dataJson");
+  let dataJsonInitialValue: DataJson = dataJsonLocalStorage
+    ? JSON.parse(dataJsonLocalStorage)
+    : dataJsonLocal;
+
+  let [dataJson, setDataJson] = useState(dataJsonInitialValue);
+  useEffect(() => {
+    localStorage.setItem("dataJson", JSON.stringify(dataJson));
+  }, [dataJson]);
 
   return (
     <div className={styles.root}>
