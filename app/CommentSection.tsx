@@ -1,3 +1,5 @@
+"use client";
+
 import dataJsonLocal from "./data.json";
 import styles from "./CommentSection.module.css";
 import { CommentChain } from "./CommentChain";
@@ -6,15 +8,25 @@ import { useEffect, useState } from "react";
 import { DataJson } from "./commentJson";
 
 export default function App() {
-  let dataJsonLocalStorage = localStorage.getItem("dataJson");
-  let dataJsonInitialValue: DataJson = dataJsonLocalStorage
-    ? JSON.parse(dataJsonLocalStorage)
-    : dataJsonLocal;
+  let [dataJson, setDataJson] = useState({
+    currentUser: { image: { png: "", webp: "" }, username: "" },
+    comments: [],
+  } as DataJson);
+  let [firstRender, setFirstRender] = useState(true);
 
-  let [dataJson, setDataJson] = useState(dataJsonInitialValue);
   useEffect(() => {
+    if (firstRender) {
+      setFirstRender(false);
+
+      let dataJsonLocalStorage = localStorage.getItem("dataJson");
+      let dataJsonInitialValue = dataJsonLocalStorage
+        ? JSON.parse(dataJsonLocalStorage)
+        : dataJsonLocal;
+      setDataJson(dataJsonInitialValue);
+      return;
+    }
     localStorage.setItem("dataJson", JSON.stringify(dataJson));
-  }, [dataJson]);
+  }, [dataJson, firstRender]);
 
   return (
     <div className={styles.root}>

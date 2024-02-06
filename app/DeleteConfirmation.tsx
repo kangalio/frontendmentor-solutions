@@ -14,7 +14,7 @@ export function DeleteConfirmation({
         <span className={styles.head}>Delete comment</span>
         <div className={styles.text}>
           Are you sure you want to delete this comment? This will remove the
-          comment and can't be undone.
+          comment and can&apos;t be undone.
         </div>
         <div className={styles.buttons}>
           <div className={styles.no} onClick={onCancel}>

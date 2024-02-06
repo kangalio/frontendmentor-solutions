@@ -152,7 +152,7 @@
   }
 }
 
-/* @media screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
   .comment {
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr auto;
@@ -160,11 +160,11 @@
       "topbarleft topbarleft"
       "content content"
       "votebox actions";
-    
+
     .votebox {
       flex-direction: row;
       width: 100px;
       height: 40px;
     }
   }
-} */
+}
