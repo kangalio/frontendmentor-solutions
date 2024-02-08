@@ -27,7 +27,8 @@ const defs = {
       jsx: (
         data: Data,
         setData: () => void,
-        setStepIndex: (_: number) => void
+        setStepIndex: (_: number) => void,
+        mobileLayout: boolean
       ) => <Step1 data={data} setData={setData} />,
     },
     {
@@ -37,8 +38,9 @@ const defs = {
       jsx: (
         data: Data,
         setData: () => void,
-        setStepIndex: (_: number) => void
-      ) => <Step2 data={data} setData={setData} />,
+        setStepIndex: (_: number) => void,
+        mobileLayout: boolean
+      ) => <Step2 data={data} setData={setData} mobileLayout={mobileLayout} />,
     },
     {
       sidebarName: "ADD-ONS",
@@ -47,7 +49,8 @@ const defs = {
       jsx: (
         data: Data,
         setData: () => void,
-        setStepIndex: (_: number) => void
+        setStepIndex: (_: number) => void,
+        mobileLayout: boolean
       ) => <Step3 data={data} setData={setData} />,
     },
     {
@@ -57,7 +60,8 @@ const defs = {
       jsx: (
         data: Data,
         setData: () => void,
-        setStepIndex: (_: number) => void
+        setStepIndex: (_: number) => void,
+        mobileLayout: boolean
       ) => <Step4 data={data} onChangePlan={() => setStepIndex(1)} />,
     },
   ],
@@ -182,11 +186,21 @@ function Step1({ data, setData }: { data: Data; setData: () => void }) {
   );
 }
 
-function Step2({ data, setData }: { data: Data; setData: () => void }) {
+function Step2({
+  data,
+  setData,
+  mobileLayout,
+}: {
+  data: Data;
+  setData: () => void;
+  mobileLayout: boolean;
+}) {
   let styles = stylesStep2;
   return (
     <div className={styles.root}>
-      <div className={styles.plans}>
+      <div
+        className={styles.plans + (mobileLayout ? " " + styles.vertical : "")}
+      >
         {defs.plans.map((plan, i) => (
           <div
             key={i}
@@ -200,15 +214,17 @@ function Step2({ data, setData }: { data: Data; setData: () => void }) {
             }}
           >
             <Image className={styles.icon} src={plan.icon} alt="" />
-            <span className={styles.title}>{plan.name}</span>
-            <span className={styles.price}>
-              {data.yearlyBilling
-                ? `$${plan.priceMonthly * 10}/yr`
-                : `$${plan.priceMonthly}/mo`}
-            </span>
-            {data.yearlyBilling ? (
-              <span className={styles.nMonthsFree}>2 months free</span>
-            ) : null}
+            <div className={styles.texts}>
+              <span className={styles.title}>{plan.name}</span>
+              <span className={styles.price}>
+                {data.yearlyBilling
+                  ? `$${plan.priceMonthly * 10}/yr`
+                  : `$${plan.priceMonthly}/mo`}
+              </span>
+              {data.yearlyBilling ? (
+                <span className={styles.nMonthsFree}>2 months free</span>
+              ) : null}
+            </div>
           </div>
         ))}
       </div>
@@ -434,13 +450,13 @@ export default function Card() {
     yearlyBilling: false,
   });
 
-  let windowWidth = useWindowSize()[0];
+  let mobileLayout = useWindowSize()[0] < 800;
 
   let [stepIndex, setStepIndex] = useState(0);
   let step = defs.steps[stepIndex];
 
   let styles = stylesCard;
-  return (windowWidth < 800 ? MobileLayout : DesktopLayout)({
+  return (mobileLayout ? MobileLayout : DesktopLayout)({
     stepIndex,
     setStepIndex,
     content: (
@@ -452,7 +468,8 @@ export default function Card() {
         {defs.steps[stepIndex].jsx(
           data,
           () => setData({ ...data }),
-          setStepIndex
+          setStepIndex,
+          mobileLayout
         )}
       </div>
     ),
