@@ -1,0 +1,88 @@
+.box {
+  /* background-color: var(--alabaster); */
+  background-color: var(--magnolia);
+  padding: 24px;
+
+  .plan {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "name price"
+      "change price";
+    align-items: center;
+
+    .planName {
+      grid-area: name;
+      font-weight: 700;
+      color: var(--marine-blue);
+    }
+
+    .changePlan {
+      grid-area: change;
+      margin-top: 4px;
+      color: var(--cool-gray);
+      text-decoration: underline;
+      font-size: 14px;
+    }
+
+    .planPrice {
+      grid-area: price;
+      font-weight: 700;
+      color: var(--marine-blue);
+    }
+  }
+
+  hr {
+    margin-top: 24px;
+    margin-bottom: 24px;
+
+    border: 0;
+    height: 1px;
+    background-color: var(--light-gray);
+  }
+
+  .addOns {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-size: 14px;
+
+    .noAddOns {
+      color: var(--cool-gray);
+    }
+
+    .addOn {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .addOnName {
+        color: var(--cool-gray);
+      }
+
+      .addOnPrice {
+        color: var(--marine-blue);
+      }
+    }
+  }
+}
+
+.total {
+  padding: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .totalLabel {
+    font-size: 14px;
+    color: var(--cool-gray);
+  }
+
+  .totalPrice {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--purplish-blue);
+  }
+}

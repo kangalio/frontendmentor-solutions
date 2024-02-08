@@ -4,6 +4,8 @@
   padding: 16px;
   column-gap: 16px;
   margin-bottom: 16px;
+  user-select: none;
+  cursor: pointer;
 
   display: grid;
   grid-template-rows: 1fr 1fr;

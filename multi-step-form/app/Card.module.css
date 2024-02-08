@@ -12,7 +12,7 @@
     width: 274px;
     height: 568px;
     border-radius: 12px;
-    background-color: var(--purplish-blue);
+    background-image: url("/bg-sidebar-desktop.svg");
 
     padding: 32px;
     display: flex;
@@ -24,7 +24,7 @@
     padding-left: 96px;
     padding-right: 96px;
     padding-top: 48px;
-    padding-bottom: 48px;
+    padding-bottom: 16px;
 
     display: flex;
     flex-direction: column;
@@ -36,25 +36,39 @@
       margin-bottom: 12px;
     }
 
-    .inputs {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .nextStep {
-      background-color: var(--marine-blue);
-      color: white;
-      padding-top: 16px;
-      padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
-      width: auto;
-      align-self: flex-end;
-      border-radius: 8px;
+    .navButtons {
       margin-top: auto;
-      user-select: none;
-      cursor: pointer;
+
+      display: flex;
+      flex-direction: row;
+
+      > * {
+        padding-top: 16px;
+        padding-bottom: 16px;
+        padding-left: 24px;
+        padding-right: 24px;
+        border-radius: 8px;
+        margin-top: auto;
+        user-select: none;
+        cursor: pointer;
+      }
+
+      .prevStep {
+        color: var(--cool-gray);
+        margin-right: auto;
+      }
+
+      .nextStep {
+        background-color: var(--marine-blue);
+        color: white;
+        margin-left: auto;
+      }
+
+      .confirm {
+        background-color: var(--purplish-blue);
+        color: white;
+        margin-left: auto;
+      }
     }
   }
 }
