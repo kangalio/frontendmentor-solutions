@@ -1,74 +1,42 @@
-.form {
-  width: 960px;
-  height: 600px;
-  background-color: var(--white);
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 
-  padding: 16px;
+  h1 {
+    margin-bottom: 12px;
+  }
+}
 
-  display: grid;
-  grid-template-columns: auto 1fr;
+.navButtons {
+  display: flex;
+  flex-direction: row;
 
-  .sidebar {
-    width: 274px;
-    height: 568px;
-    border-radius: 12px;
-    background-image: url("/bg-sidebar-desktop.svg");
-
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+  > * {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-radius: 8px;
+    margin-top: auto;
+    user-select: none;
+    cursor: pointer;
   }
 
-  .content {
-    padding-left: 96px;
-    padding-right: 96px;
-    padding-top: 48px;
-    padding-bottom: 16px;
+  .prevStep {
+    color: var(--cool-gray);
+    margin-right: auto;
+  }
 
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+  .nextStep {
+    background-color: var(--marine-blue);
+    color: white;
+    margin-left: auto;
+  }
 
-    overflow: scroll;
-
-    h1 {
-      margin-bottom: 12px;
-    }
-
-    .navButtons {
-      margin-top: auto;
-
-      display: flex;
-      flex-direction: row;
-
-      > * {
-        padding-top: 16px;
-        padding-bottom: 16px;
-        padding-left: 24px;
-        padding-right: 24px;
-        border-radius: 8px;
-        margin-top: auto;
-        user-select: none;
-        cursor: pointer;
-      }
-
-      .prevStep {
-        color: var(--cool-gray);
-        margin-right: auto;
-      }
-
-      .nextStep {
-        background-color: var(--marine-blue);
-        color: white;
-        margin-left: auto;
-      }
-
-      .confirm {
-        background-color: var(--purplish-blue);
-        color: white;
-        margin-left: auto;
-      }
-    }
+  .confirm {
+    background-color: var(--purplish-blue);
+    color: white;
+    margin-left: auto;
   }
 }

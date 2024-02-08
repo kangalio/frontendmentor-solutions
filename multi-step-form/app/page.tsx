@@ -14,9 +14,53 @@ import stylesStep1 from "./Step1.module.css";
 import stylesStep2 from "./Step2.module.css";
 import stylesStep3 from "./Step3.module.css";
 import stylesStep4 from "./Step4.module.css";
+import stylesDesktopLayout from "./DesktopLayout.module.css";
+import stylesMobileLayout from "./MobileLayout.module.css";
 import Image from "next/image";
 
 const defs = {
+  steps: [
+    {
+      sidebarName: "YOUR INFO",
+      title: "Personal info",
+      subtitle: "Please provide your name, email address, and phone number.",
+      jsx: (
+        data: Data,
+        setData: () => void,
+        setStepIndex: (_: number) => void
+      ) => <Step1 data={data} setData={setData} />,
+    },
+    {
+      sidebarName: "SELECT PLAN",
+      title: "Select your plan",
+      subtitle: "You have the option of monthly or yearly billing.",
+      jsx: (
+        data: Data,
+        setData: () => void,
+        setStepIndex: (_: number) => void
+      ) => <Step2 data={data} setData={setData} />,
+    },
+    {
+      sidebarName: "ADD-ONS",
+      title: "Pick add-ons",
+      subtitle: "Add-ons help enhance your gaming experience.",
+      jsx: (
+        data: Data,
+        setData: () => void,
+        setStepIndex: (_: number) => void
+      ) => <Step3 data={data} setData={setData} />,
+    },
+    {
+      sidebarName: "SUMMARY",
+      title: "Finishing up",
+      subtitle: "Double-check everything looks OK before confirming.",
+      jsx: (
+        data: Data,
+        setData: () => void,
+        setStepIndex: (_: number) => void
+      ) => <Step4 data={data} onChangePlan={() => setStepIndex(1)} />,
+    },
+  ],
   plans: [
     {
       name: "Arcade" as const,
@@ -56,19 +100,19 @@ type Data = {
   name: string;
   email: string;
   phone: string;
-  plan: (typeof defs.plans)[number]["name"];
+  plan: (typeof defs.plans)[number]["name"] | undefined;
   addOns: { [Property in (typeof defs.addOns)[number]["name"]]: boolean };
   yearlyBilling: boolean;
 };
 
 function SidebarItem({
   title,
-  index,
+  number,
   selected = false,
   onclick,
 }: {
   title: string;
-  index: number;
+  number: number;
   selected?: boolean;
   onclick: () => void;
 }) {
@@ -80,9 +124,9 @@ function SidebarItem({
           styles.number + " " + (selected ? styles.numberSelected : "")
         }
       >
-        {index}
+        {number}
       </div>
-      <div className={styles.step}>STEP {index}</div>
+      <div className={styles.step}>STEP {number}</div>
       <div className={styles.title}>{title}</div>
     </div>
   );
@@ -132,75 +176,49 @@ function Step1({ data, setData }: { data: Data; setData: () => void }) {
   );
 }
 
-function Step2({
-  plan,
-  setPlan,
-  yearlyBilling,
-  setYearlyBilling,
-}: {
-  plan: Data["plan"];
-  setPlan: (_: Data["plan"]) => void;
-  yearlyBilling: boolean;
-  setYearlyBilling: (_: boolean) => void;
-}) {
+function Step2({ data, setData }: { data: Data; setData: () => void }) {
   let styles = stylesStep2;
   return (
     <div className={styles.root}>
       <div className={styles.plans}>
-        <div
-          className={
-            styles.plan + " " + (plan === "Arcade" ? styles.selected : "")
-          }
-          onClick={() => setPlan("Arcade")}
-        >
-          <Image className={styles.icon} src={iconArcade} alt="" />
-          <span className={styles.title}>Arcade</span>
-          <span className={styles.price}>
-            {yearlyBilling ? "$90/yr" : "$9/mo"}
-          </span>
-          {yearlyBilling ? (
-            <span className={styles.nMonthsFree}>2 months free</span>
-          ) : null}
-        </div>
-        <div
-          className={
-            styles.plan + " " + (plan === "Advanced" ? styles.selected : "")
-          }
-          onClick={() => setPlan("Advanced")}
-        >
-          <Image className={styles.icon} src={iconAdvanced} alt="" />
-          <span className={styles.title}>Advanced</span>
-          <span className={styles.price}>
-            {yearlyBilling ? "$120/yr" : "$12/mo"}
-          </span>
-          {yearlyBilling ? (
-            <span className={styles.nMonthsFree}>2 months free</span>
-          ) : null}
-        </div>
-        <div
-          className={
-            styles.plan + " " + (plan === "Pro" ? styles.selected : "")
-          }
-          onClick={() => setPlan("Pro")}
-        >
-          <Image className={styles.icon} src={iconPro} alt="" />
-          <span className={styles.title}>Pro</span>
-          <span className={styles.price}>
-            {yearlyBilling ? "$150/yr" : "$15/mo"}
-          </span>
-          {yearlyBilling ? (
-            <span className={styles.nMonthsFree}>2 months free</span>
-          ) : null}
-        </div>
+        {defs.plans.map((plan, i) => (
+          <div
+            key={i}
+            className={
+              styles.plan +
+              (data.plan === plan.name ? " " + styles.selected : "")
+            }
+            onClick={() => {
+              data.plan = data.plan === plan.name ? undefined : plan.name;
+              setData();
+            }}
+          >
+            <Image className={styles.icon} src={plan.icon} alt="" />
+            <span className={styles.title}>{plan.name}</span>
+            <span className={styles.price}>
+              {data.yearlyBilling
+                ? `$${plan.priceMonthly * 10}/yr`
+                : `$${plan.priceMonthly}/mo`}
+            </span>
+            {data.yearlyBilling ? (
+              <span className={styles.nMonthsFree}>2 months free</span>
+            ) : null}
+          </div>
+        ))}
       </div>
       <div
         className={styles.billing}
-        onClick={() => setYearlyBilling(!yearlyBilling)}
+        onClick={() => {
+          data.yearlyBilling = !data.yearlyBilling;
+          setData();
+        }}
       >
         <span>Monthly</span>
         <div
           className={
-            styles.toggle + " " + (yearlyBilling ? styles.right : styles.left)
+            styles.toggle +
+            " " +
+            (data.yearlyBilling ? styles.right : styles.left)
           }
         >
           {/* <input type="checkbox" /> */}
@@ -211,15 +229,7 @@ function Step2({
   );
 }
 
-function Step3({
-  yearlyBilling,
-  addOnsSelected,
-  setAddOnsSelected,
-}: {
-  yearlyBilling: boolean;
-  addOnsSelected: Data["addOns"];
-  setAddOnsSelected: () => void;
-}) {
+function Step3({ data, setData }: { data: Data; setData: () => void }) {
   let styles = stylesStep3;
   return (
     <div>
@@ -227,11 +237,11 @@ function Step3({
         {defs.addOns.map(({ name, description, priceMonthly }) => (
           <div
             className={
-              styles.addOn + " " + (addOnsSelected[name] ? styles.checked : "")
+              styles.addOn + " " + (data.addOns[name] ? styles.checked : "")
             }
             onClick={() => {
-              addOnsSelected[name] = !addOnsSelected[name];
-              setAddOnsSelected();
+              data.addOns[name] = !data.addOns[name];
+              setData();
             }}
             key={name}
           >
@@ -241,7 +251,7 @@ function Step3({
             <span className={styles.title}>{name}</span>
             <span className={styles.subtitle}>{description}</span>
             <span className={styles.price}>
-              {yearlyBilling
+              {data.yearlyBilling
                 ? `+$${priceMonthly * 10}/yr`
                 : `+$${priceMonthly}/mo`}
             </span>
@@ -252,7 +262,13 @@ function Step3({
   );
 }
 
-function Step4({ data }: { data: Data }) {
+function Step4({
+  data,
+  onChangePlan,
+}: {
+  data: Data;
+  onChangePlan: () => void;
+}) {
   let plan = defs.plans.find((p) => p.name === data.plan)!;
   let addOns = defs.addOns.filter((addOn) => data.addOns[addOn.name]);
   let totalPriceMonthly =
@@ -267,7 +283,9 @@ function Step4({ data }: { data: Data }) {
           <span className={styles.planName}>
             {data.plan} ({data.yearlyBilling ? "Yearly" : "Monthly"})
           </span>
-          <span className={styles.changePlan}>Change</span>
+          <span className={styles.changePlan} onClick={onChangePlan}>
+            Change
+          </span>
           <span className={styles.planPrice}>
             {data.yearlyBilling
               ? `$${plan.priceMonthly * 10}/yr`
@@ -308,12 +326,47 @@ function Step4({ data }: { data: Data }) {
   );
 }
 
+function DesktopLayout({
+  stepIndex,
+  setStepIndex,
+  content,
+  navButtons,
+}: {
+  stepIndex: number;
+  setStepIndex: (_: number) => void;
+  content: JSX.Element;
+  navButtons: JSX.Element;
+}) {
+  let step = defs.steps[stepIndex];
+
+  let styles = stylesDesktopLayout;
+  return (
+    <div className={styles.form}>
+      <div className={styles.sidebar}>
+        {defs.steps.map((step, i) => (
+          <SidebarItem
+            key={i}
+            title={step.sidebarName}
+            number={i + 1}
+            onclick={() => setStepIndex(i)}
+            selected={stepIndex === i}
+          />
+        ))}
+      </div>
+      <div className={styles.content}>
+        {content}
+        <div className={styles.navButtons}>{navButtons}</div>
+      </div>
+    </div>
+  );
+}
+
 export default function Card() {
   let [data, setData] = useState<Data>({
     name: "",
     email: "",
     phone: "",
-    plan: "Arcade",
+    plan: undefined,
     addOns: {
       "Online service": false,
       "Larger storage": false,
@@ -322,80 +375,42 @@ export default function Card() {
     yearlyBilling: false,
   });
 
-  let [step, setStep] = useState(1);
+  let [stepIndex, setStepIndex] = useState(0);
+  let step = defs.steps[stepIndex];
 
   let styles = stylesCard;
   return (
-    <div className={styles.form}>
-      <div className={styles.sidebar}>
-        {["YOUR INFO", "SELECT PLAN", "ADD-ONS", "SUMMARY"].map((title, i) => (
-          <SidebarItem
-            key={i}
-            title={title}
-            index={i + 1}
-            onclick={() => setStep(i + 1)}
-            selected={step === i + 1}
-          />
-        ))}
-      </div>
-      <div className={styles.content}>
-        <div>
-          <h1>
-            {
-              [
-                "Personal info",
-                "Select your plan",
-                "Pick add-ons",
-                "Finishing up",
-              ][step - 1]
-            }
-          </h1>
-          <span>
-            {
-              [
-                "Please provide your name, email address, and phone number.",
-                "You have the option of monthly or yearly billing.",
-                "Add-ons help enhance your gaming experience.",
-                "Double-check everything looks OK before confirming.",
-              ][step - 1]
-            }
-          </span>
+    <DesktopLayout
+      stepIndex={stepIndex}
+      setStepIndex={setStepIndex}
+      content={
+        <div className={styles.content}>
+          <div>
+            <h1>{step.title}</h1>
+            <span>{step.subtitle}</span>
+          </div>
+          {defs.steps[stepIndex].jsx(
+            data,
+            () => setData({ ...data }),
+            setStepIndex
+          )}
         </div>
-        {[
-          () => <Step1 data={data} setData={() => setData({ ...data })} />,
-          () => (
-            <Step2
-              plan={data.plan}
-              setPlan={(plan) => {
-                data.plan = plan;
-                setData({ ...data });
-              }}
-              yearlyBilling={data.yearlyBilling}
-              setYearlyBilling={(value) => {
-                data.yearlyBilling = value;
-                setData({ ...data });
-              }}
-            />
-          ),
-          () => (
-            <Step3
-              yearlyBilling={data.yearlyBilling}
-              addOnsSelected={data.addOns}
-              setAddOnsSelected={() => {
-                setData({ ...data });
-              }}
-            />
-          ),
-          () => <Step4 data={data} />,
-        ][step - 1]()}
+      }
+      navButtons={
         <div className={styles.navButtons}>
-          {step !== 1 ? (
-            <div className={styles.prevStep} onClick={() => setStep(step - 1)}>
+          {stepIndex !== 1 ? (
+            <div
+              className={styles.prevStep}
+              onClick={() => setStepIndex(stepIndex)}
+            >
               Go Back
             </div>
           ) : null}
-          {step !== 4 ? (
-            <div className={styles.nextStep} onClick={() => setStep(step + 1)}>
+          {stepIndex !== 4 ? (
+            <div
+              className={styles.nextStep}
+              onClick={() => setStepIndex(stepIndex + 1)}
+            >
               Next Step
             </div>
           ) : (
@@ -404,7 +419,7 @@ export default function Card() {
             </div>
           )}
         </div>
-      </div>
-    </div>
+      }
+    />
   );
 }

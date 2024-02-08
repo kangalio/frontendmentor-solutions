@@ -1,0 +1,37 @@
+.form {
+  width: 960px;
+  height: 600px;
+  background-color: var(--white);
+
+  padding: 16px;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+
+  .sidebar {
+    width: 274px;
+    height: 568px;
+    border-radius: 12px;
+    background-image: url("/bg-sidebar-desktop.svg");
+
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .content {
+    padding-left: 96px;
+    padding-right: 96px;
+    padding-top: 48px;
+    padding-bottom: 16px;
+    overflow: scroll;
+
+    display: flex;
+    flex-direction: column;
+
+    .navButtons {
+      margin-top: auto;
+    }
+  }
+}
