@@ -1,0 +1,45 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebarBackground {
+  z-index: -1;
+  position: fixed;
+  height: 172px;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  > * {
+    object-fit: cover;
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: center;
+  margin: 32px;
+}
+
+.card {
+  border-radius: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  background-color: white;
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  box-shadow: #0001 0 15px 15px;
+}
+
+.bottomBar {
+  margin-top: auto;
+  background-color: white;
+  padding: 16px;
+}

@@ -109,11 +109,13 @@ function SidebarItem({
   title,
   number,
   selected = false,
+  numberOnly = false,
   onclick,
 }: {
   title: string;
   number: number;
   selected?: boolean;
+  numberOnly?: boolean;
   onclick: () => void;
 }) {
   let styles = stylesSidebarItem;
@@ -121,13 +123,17 @@ function SidebarItem({
     <div className={styles.sidebarItem} onClick={onclick}>
       <div
         className={
-          styles.number + " " + (selected ? styles.numberSelected : "")
+          styles.number + (selected ? " " + styles.numberSelected : "")
         }
       >
         {number}
       </div>
-      <div className={styles.step}>STEP {number}</div>
-      <div className={styles.title}>{title}</div>
+      {numberOnly ? null : (
+        <div className={styles.description}>
+          <div className={styles.step}>STEP {number}</div>
+          <div className={styles.title}>{title}</div>
+        </div>
+      )}
     </div>
   );
 }
@@ -341,22 +347,61 @@ function DesktopLayout({
 
   let styles = stylesDesktopLayout;
   return (
-    <div className={styles.form}>
+    <div className={styles.root}>
+      <div className={styles.card}>
+        <div className={styles.sidebar}>
+          {defs.steps.map((step, i) => (
+            <SidebarItem
+              key={i}
+              title={step.sidebarName}
+              number={i + 1}
+              onclick={() => setStepIndex(i)}
+              selected={stepIndex === i}
+            />
+          ))}
+        </div>
+        <div className={styles.content}>
+          {content}
+          <div className={styles.navButtons}>{navButtons}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MobileLayout({
+  stepIndex,
+  setStepIndex,
+  content,
+  navButtons,
+}: {
+  stepIndex: number;
+  setStepIndex: (_: number) => void;
+  content: JSX.Element;
+  navButtons: JSX.Element;
+}) {
+  let step = defs.steps[stepIndex];
+
+  let styles = stylesMobileLayout;
+  return (
+    <div className={styles.root}>
+      <div className={styles.sidebarBackground}>
+        <Image src="./bg-sidebar-mobile.svg" fill alt="" />
+      </div>
       <div className={styles.sidebar}>
         {defs.steps.map((step, i) => (
           <SidebarItem
             key={i}
             title={step.sidebarName}
             number={i + 1}
+            numberOnly
             onclick={() => setStepIndex(i)}
             selected={stepIndex === i}
           />
         ))}
       </div>
-      <div className={styles.content}>
-        {content}
-        <div className={styles.navButtons}>{navButtons}</div>
-      </div>
+      <div className={styles.card}>{content}</div>
+      <div className={styles.bottomBar}>{navButtons}</div>
     </div>
   );
 }
@@ -380,7 +425,7 @@ export default function Card() {
 
   let styles = stylesCard;
   return (
-    <DesktopLayout
+    <MobileLayout
       stepIndex={stepIndex}
       setStepIndex={setStepIndex}
       content={

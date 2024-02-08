@@ -1,4 +1,11 @@
-.form {
+.root {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.root {
   width: 960px;
   height: 600px;
   background-color: var(--white);

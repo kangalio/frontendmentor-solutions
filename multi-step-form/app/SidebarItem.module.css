@@ -1,11 +1,7 @@
 .sidebarItem {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  grid-template-columns: auto 1fr;
-  column-gap: 16px;
-  grid-template-areas:
-    "number step"
-    "number title";
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
   color: white;
   cursor: pointer;
   user-select: none;
@@ -26,15 +22,17 @@
     }
   }
 
-  .step {
-    grid-area: step;
-    font-size: 12px;
-  }
+  .description {
+    .step {
+      grid-area: step;
+      font-size: 12px;
+    }
 
-  .title {
-    grid-area: title;
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.06em;
+    .title {
+      grid-area: title;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+    }
   }
 }
