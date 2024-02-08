@@ -1,0 +1,40 @@
+.sidebarItem {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  grid-template-areas:
+    "number step"
+    "number title";
+  color: white;
+  cursor: pointer;
+  user-select: none;
+
+  .number {
+    grid-area: number;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    &.numberSelected {
+      background-color: white;
+      color: black;
+    }
+  }
+
+  .step {
+    grid-area: step;
+    font-size: 12px;
+  }
+
+  .title {
+    grid-area: title;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+  }
+}

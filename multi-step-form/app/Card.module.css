@@ -1,0 +1,60 @@
+.form {
+  width: 960px;
+  height: 600px;
+  background-color: var(--white);
+
+  padding: 16px;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+
+  .sidebar {
+    width: 274px;
+    height: 568px;
+    border-radius: 12px;
+    background-color: var(--purplish-blue);
+
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .content {
+    padding-left: 96px;
+    padding-right: 96px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    overflow: scroll;
+
+    h1 {
+      margin-bottom: 12px;
+    }
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .nextStep {
+      background-color: var(--marine-blue);
+      color: white;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      padding-left: 24px;
+      padding-right: 24px;
+      width: auto;
+      align-self: flex-end;
+      border-radius: 8px;
+      margin-top: auto;
+      user-select: none;
+      cursor: pointer;
+    }
+  }
+}

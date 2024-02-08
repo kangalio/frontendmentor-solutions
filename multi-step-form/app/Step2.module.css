@@ -1,0 +1,84 @@
+.plans {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+
+  .plan {
+    flex-basis: 0;
+    flex-grow: 1;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--light-gray);
+    cursor: pointer;
+    user-select: none;
+
+    display: flex;
+    flex-direction: column;
+
+    &.selected {
+      border: 1px solid var(--purplish-blue);
+    }
+
+    .icon {
+      margin-bottom: 48px;
+    }
+
+    .title {
+      font-weight: 500;
+      margin-bottom: 4px;
+      font-size: 18px;
+    }
+
+    .price {
+      color: var(--cool-gray);
+    }
+
+    .nMonthsFree {
+      margin-top: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--marine-blue);
+    }
+  }
+}
+
+.billing {
+  margin-top: 32px;
+  padding: 8px;
+  background-color: var(--magnolia);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  .toggle {
+    height: 20px;
+    width: 40px;
+    border-radius: 10px;
+    background-color: var(--marine-blue);
+    position: relative;
+
+    /* input {
+      width: 0;
+      height: 0;
+      visibility: hidden;
+    } */
+
+    &:before {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: white;
+      top: 4px;
+    }
+    &.left:before {
+      left: 4px;
+    }
+    &.right:before {
+      right: 4px;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .label {
+    margin-bottom: 8px;
+  }
+
+  .input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid black;
+    width: 100%;
+  }
+}

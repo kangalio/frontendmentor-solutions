@@ -1,0 +1,53 @@
+.addOn {
+  width: 100%;
+  border-radius: 8px;
+  padding: 16px;
+  column-gap: 16px;
+  margin-bottom: 16px;
+
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "checkbox title price"
+    "checkbox subtitle price";
+  align-items: center;
+
+  border: 1px solid var(--light-gray);
+  .checkbox {
+    border: 1px solid var(--light-gray);
+  }
+  &.checked {
+    border: 1px solid var(--purplish-blue);
+    .checkbox {
+      border: none;
+      background-color: var(--purplish-blue);
+    }
+  }
+
+  .checkbox {
+    grid-area: checkbox;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title {
+    grid-area: title;
+    font-weight: 700;
+    color: var(--marine-blue);
+  }
+
+  .subtitle {
+    grid-area: subtitle;
+    color: var(--cool-gray);
+    margin-top: 4px;
+  }
+
+  .price {
+    grid-area: price;
+  }
+}
