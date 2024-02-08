@@ -16,6 +16,7 @@ import stylesStep3 from "./Step3.module.css";
 import stylesStep4 from "./Step4.module.css";
 import stylesDesktopLayout from "./DesktopLayout.module.css";
 import stylesMobileLayout from "./MobileLayout.module.css";
+import stylesSelectableCard from "./SelectableCard.module.css";
 import Image from "next/image";
 
 const defs = {
@@ -206,7 +207,10 @@ function Step2({
             key={i}
             className={
               styles.plan +
-              (data.plan === plan.name ? " " + styles.selected : "")
+              (" " + stylesSelectableCard.root) +
+              (data.plan === plan.name
+                ? " " + stylesSelectableCard.selected
+                : "")
             }
             onClick={() => {
               data.plan = data.plan === plan.name ? undefined : plan.name;
@@ -259,7 +263,11 @@ function Step3({ data, setData }: { data: Data; setData: () => void }) {
         {defs.addOns.map(({ name, description, priceMonthly }) => (
           <div
             className={
-              styles.addOn + " " + (data.addOns[name] ? styles.checked : "")
+              styles.addOn +
+              (" " + stylesSelectableCard.root) +
+              (data.addOns[name]
+                ? " " + styles.checked + (" " + stylesSelectableCard.selected)
+                : "")
             }
             onClick={() => {
               data.addOns[name] = !data.addOns[name];
@@ -462,8 +470,8 @@ export default function Card() {
     content: (
       <div className={styles.content}>
         <div>
-          <h1>{step.title}</h1>
-          <span>{step.subtitle}</span>
+          <h1 className={styles.title}>{step.title}</h1>
+          <span className={styles.subtitle}>{step.subtitle}</span>
         </div>
         {defs.steps[stepIndex].jsx(
           data,

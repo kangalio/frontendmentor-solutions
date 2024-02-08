@@ -6,19 +6,10 @@
   .plan {
     flex-basis: 0;
     flex-grow: 1;
-    padding: 16px;
-    border-radius: 8px;
-    border: 1px solid var(--light-gray);
-    cursor: pointer;
-    user-select: none;
 
     display: flex;
     flex-direction: column;
     gap: 48px;
-
-    &.selected {
-      border: 1px solid var(--purplish-blue);
-    }
 
     .texts {
       display: flex;

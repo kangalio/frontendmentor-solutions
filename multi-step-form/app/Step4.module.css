@@ -2,6 +2,7 @@
   /* background-color: var(--alabaster); */
   background-color: var(--magnolia);
   padding: 24px;
+  border-radius: 8px;
 
   .plan {
     display: grid;

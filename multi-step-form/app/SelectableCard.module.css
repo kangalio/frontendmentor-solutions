@@ -1,0 +1,16 @@
+.root {
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--light-gray);
+  cursor: pointer;
+  user-select: none;
+  transition-duration: 0.2s;
+  transition-property: border, background-color;
+  &:hover {
+    border: 1px solid var(--purplish-blue);
+  }
+  &.selected {
+    border: 1px solid var(--purplish-blue);
+    background-color: var(--alabaster);
+  }
+}
