@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 import iconArcade from "./images/icon-arcade.svg";
 import iconAdvanced from "./images/icon-advanced.svg";
@@ -406,6 +406,20 @@ function MobileLayout({
   );
 }
 
+// https://stackoverflow.com/a/19014495/9946772
+function useWindowSize() {
+  const [size, setSize] = useState<[number, number]>([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+  return size;
+}
+
 export default function Card() {
   let [data, setData] = useState<Data>({
     name: "",
@@ -420,51 +434,51 @@ export default function Card() {
     yearlyBilling: false,
   });
 
+  let windowWidth = useWindowSize()[0];
+
   let [stepIndex, setStepIndex] = useState(0);
   let step = defs.steps[stepIndex];
 
   let styles = stylesCard;
-  return (
-    <MobileLayout
-      stepIndex={stepIndex}
-      setStepIndex={setStepIndex}
-      content={
-        <div className={styles.content}>
-          <div>
-            <h1>{step.title}</h1>
-            <span>{step.subtitle}</span>
+  return (windowWidth < 800 ? MobileLayout : DesktopLayout)({
+    stepIndex,
+    setStepIndex,
+    content: (
+      <div className={styles.content}>
+        <div>
+          <h1>{step.title}</h1>
+          <span>{step.subtitle}</span>
+        </div>
+        {defs.steps[stepIndex].jsx(
+          data,
+          () => setData({ ...data }),
+          setStepIndex
+        )}
+      </div>
+    ),
+    navButtons: (
+      <div className={styles.navButtons}>
+        {stepIndex !== 1 ? (
+          <div
+            className={styles.prevStep}
+            onClick={() => setStepIndex(stepIndex)}
+          >
+            Go Back
           </div>
-          {defs.steps[stepIndex].jsx(
-            data,
-            () => setData({ ...data }),
-            setStepIndex
-          )}
-        </div>
-      }
-      navButtons={
-        <div className={styles.navButtons}>
-          {stepIndex !== 1 ? (
-            <div
-              className={styles.prevStep}
-              onClick={() => setStepIndex(stepIndex)}
-            >
-              Go Back
-            </div>
-          ) : null}
-          {stepIndex !== 4 ? (
-            <div
-              className={styles.nextStep}
-              onClick={() => setStepIndex(stepIndex + 1)}
-            >
-              Next Step
-            </div>
-          ) : (
-            <div className={styles.confirm} onClick={() => alert("woohoo!")}>
-              Confirm
-            </div>
-          )}
-        </div>
-      }
-    />
-  );
+        ) : null}
+        {stepIndex !== 4 ? (
+          <div
+            className={styles.nextStep}
+            onClick={() => setStepIndex(stepIndex + 1)}
+          >
+            Next Step
+          </div>
+        ) : (
+          <div className={styles.confirm} onClick={() => alert("woohoo!")}>
+            Confirm
+          </div>
+        )}
+      </div>
+    ),
+  });
 }

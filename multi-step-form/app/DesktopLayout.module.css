@@ -5,7 +5,7 @@
   justify-content: center;
 }
 
-.root {
+.card {
   width: 960px;
   height: 600px;
   background-color: var(--white);
