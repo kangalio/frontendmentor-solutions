@@ -163,7 +163,7 @@ function Step1({ data, setData }: { data: Data; setData: () => void }) {
         <div className={styles.label}>Email Address</div>
         <input
           className={styles.input}
-          onBlur={(e) => {
+          onChange={(e) => {
             data.email = e.target.value;
             setData();
           }}
@@ -175,7 +175,7 @@ function Step1({ data, setData }: { data: Data; setData: () => void }) {
         <div className={styles.label}>Phone Number</div>
         <input
           className={styles.input}
-          onBlur={(e) => {
+          onChange={(e) => {
             data.phone = e.target.value;
             setData();
           }}
