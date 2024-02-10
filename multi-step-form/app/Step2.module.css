@@ -75,6 +75,7 @@
 .billing {
   margin-top: 32px;
   padding: 8px;
+  border-radius: 8px;
   background-color: var(--magnolia);
   display: flex;
   flex-direction: row;
