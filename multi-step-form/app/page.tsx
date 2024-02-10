@@ -519,7 +519,7 @@ export default function Card() {
         {stepIndex !== 1 ? (
           <div
             className={styles.prevStep}
-            onClick={() => setStepIndex(stepIndex)}
+            onClick={() => setStepIndex(stepIndex - 1)}
           >
             Go Back
           </div>
