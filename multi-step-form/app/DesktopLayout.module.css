@@ -10,7 +10,7 @@
   width: 960px;
   height: 600px;
   background-color: var(--white);
-
+  box-shadow: #0001 0 15px 15px;
   padding: 16px;
 
   display: grid;
