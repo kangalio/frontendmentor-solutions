@@ -240,12 +240,19 @@ function Step2({
   setData: () => void;
   mobileLayout: boolean;
 }) {
-  let complainAboutNoSelection =
-    data.step2DisplayValidation && data.plan === undefined;
-
   let styles = stylesStep2;
   return (
     <div className={styles.root}>
+      <div
+        className={
+          styles.validation +
+          (data.step2DisplayValidation && data.plan === undefined
+            ? " " + styles.visible
+            : "")
+        }
+      >
+        Please select a plan
+      </div>
       <div
         className={styles.plans + (mobileLayout ? " " + styles.vertical : "")}
       >
