@@ -21,10 +21,17 @@
       grid-area: validation;
       font-weight: 700;
       font-size: 14px;
+
+      transition-duration: 1s;
+      transition-property: opacity;
+
+      opacity: 0;
       &.error {
+        opacity: 1;
         color: var(--strawberry-red);
       }
       &.ok {
+        opacity: 1;
         color: limegreen;
       }
     }

@@ -207,15 +207,16 @@ function Step1({ data, setData }: { data: Data; setData: () => void }) {
       ].map(({ label, placeholder, getter, setter, error }) => (
         <div key={label}>
           <div className={styles.label}>{label}</div>
-          {data.step1DisplayValidation ? (
-            <span
-              className={
-                styles.validation + " " + (error ? styles.error : styles.ok)
-              }
-            >
-              {error ?? "Ok"}
-            </span>
-          ) : null}
+          <span
+            className={
+              styles.validation +
+              (data.step1DisplayValidation
+                ? " " + (error ? styles.error : styles.ok)
+                : "")
+            }
+          >
+            {data.step1DisplayValidation ? error ?? "Ok" : ""}
+          </span>
           <input
             className={styles.input + (error ? " " + styles.isError : "")}
             onChange={(e) => {
