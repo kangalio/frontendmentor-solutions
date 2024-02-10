@@ -530,21 +530,24 @@ function useStepIndex({
 }) {
   let [stepIndex, setStepIndex] = useState(initialStep);
   let setStepIndexIfValidates = (targetIndex: number) => {
-    if (targetIndex > stepIndex) {
-      if (stepIndex === 0) {
+    for (let i = stepIndex; i < targetIndex; i++) {
+      if (i === 0) {
         if (Object.keys(checkStep1Errors({ data })).length > 0) {
           data.step1DisplayValidation = true;
           setData();
+          setStepIndex(i);
           return;
         }
-      } else if (stepIndex === 1) {
+      } else if (i === 1) {
         if (data.plan === undefined) {
           data.step2DisplayValidation = true;
           setData();
+          setStepIndex(i);
           return;
         }
       }
     }
+
     if (stepIndex === 0) data.step1DisplayValidation = false;
     else if (stepIndex === 1) data.step2DisplayValidation = false;
     setStepIndex(targetIndex);
