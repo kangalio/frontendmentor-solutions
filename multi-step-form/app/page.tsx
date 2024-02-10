@@ -516,7 +516,7 @@ export default function Card() {
     ),
     navButtons: (
       <div className={styles.navButtons}>
-        {stepIndex !== 1 ? (
+        {stepIndex !== 0 ? (
           <div
             className={styles.prevStep}
             onClick={() => setStepIndex(stepIndex - 1)}
@@ -524,7 +524,7 @@ export default function Card() {
             Go Back
           </div>
         ) : null}
-        {stepIndex !== 4 ? (
+        {stepIndex !== 3 ? (
           <div
             className={styles.nextStep}
             onClick={() => setStepIndex(stepIndex + 1)}
