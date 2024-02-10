@@ -143,46 +143,79 @@ function SidebarItem({
   );
 }
 
+type Step1Errors = { name?: string; email?: string; phone?: string };
+
+function checkStep1Errors({ data }: { data: Data }) {
+  let errors: Step1Errors = {};
+
+  if (data.name.length === 0) {
+    errors.name = "This field is required";
+  }
+
+  if (data.email.length === 0) {
+    errors.email = "This field is required";
+  } else if (
+    // Regex credit: https://stackoverflow.com/a/48800/9946772
+    data.email.match(/^\S+@\S+$/) === null
+  ) {
+    errors.email = "Please enter a valid email address";
+  }
+
+  if (data.phone.length === 0) {
+    errors.phone = "This field is required";
+  } else if (
+    // Regex credit: myself
+    data.phone.match(/^\+?[0-9 ()-]{5,20}$/) === null
+  ) {
+    errors.phone = "Please enter a valid phone number";
+  }
+
+  return errors;
+}
+
 function Step1({ data, setData }: { data: Data; setData: () => void }) {
+  let errors = checkStep1Errors({ data });
+
   let styles = stylesStep1;
   return (
     <div className={styles.inputs}>
-      <div>
-        <div className={styles.label}>Name</div>
-        <input
-          className={styles.input}
-          onChange={(e) => {
-            data.name = e.target.value;
-            setData();
-          }}
-          value={data.name}
-          placeholder="e.g. Stephen King"
-        ></input>
-      </div>
-      <div>
-        <div className={styles.label}>Email Address</div>
-        <input
-          className={styles.input}
-          onChange={(e) => {
-            data.email = e.target.value;
-            setData();
-          }}
-          value={data.email}
-          placeholder="e.g. stephenking@lorem.com"
-        ></input>
-      </div>
-      <div>
-        <div className={styles.label}>Phone Number</div>
-        <input
-          className={styles.input}
-          onChange={(e) => {
-            data.phone = e.target.value;
-            setData();
-          }}
-          value={data.phone}
-          placeholder="e.g. +1 234 567 890"
-        ></input>
-      </div>
+      {[
+        {
+          label: "Name",
+          placeholder: "e.g. Stephen King",
+          getter: data.name,
+          setter: (x: string) => (data.name = x),
+          error: errors.name,
+        },
+        {
+          label: "Email Address",
+          placeholder: "e.g. stephenking@lorem.com",
+          getter: data.email,
+          setter: (x: string) => (data.email = x),
+          error: errors.email,
+        },
+        {
+          label: "Phone Number",
+          placeholder: "e.g. +1 234 567 890",
+          getter: data.phone,
+          setter: (x: string) => (data.phone = x),
+          error: errors.phone,
+        },
+      ].map(({ label, placeholder, getter, setter, error }) => (
+        <div key={label}>
+          <div className={styles.label}>{label}</div>
+          <span className={styles.error}>{error}</span>
+          <input
+            className={styles.input + (error ? " " + styles.isError : "")}
+            onChange={(e) => {
+              setter(e.target.value);
+              setData();
+            }}
+            value={getter}
+            placeholder={placeholder}
+          ></input>
+        </div>
+      ))}
     </div>
   );
 }

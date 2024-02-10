@@ -3,14 +3,38 @@
   flex-direction: column;
   gap: 24px;
 
-  .label {
-    margin-bottom: 8px;
-  }
+  > div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "label error"
+      "input input";
 
-  .input {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid black;
-    width: 100%;
+    .label {
+      grid-area: label;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .error {
+      grid-area: error;
+      font-weight: 700;
+      color: var(--strawberry-red);
+      font-size: 14px;
+    }
+
+    .input {
+      grid-area: input;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--light-gray);
+      font-weight: 500;
+      width: 100%;
+
+      &.isError {
+        border: 1px solid var(--strawberry-red);
+      }
+    }
   }
 }
