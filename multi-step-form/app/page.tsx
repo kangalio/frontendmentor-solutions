@@ -296,7 +296,9 @@ function Step2({
           setData();
         }}
       >
-        <span>Monthly</span>
+        <span className={data.yearlyBilling ? "" : styles.selected}>
+          Monthly
+        </span>
         <div
           className={
             styles.toggle +
@@ -306,7 +308,9 @@ function Step2({
         >
           {/* <input type="checkbox" /> */}
         </div>
-        <span>Yearly</span>
+        <span className={data.yearlyBilling ? styles.selected : ""}>
+          Yearly
+        </span>
       </div>
     </div>
   );

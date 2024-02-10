@@ -83,6 +83,16 @@
   justify-content: center;
   gap: 16px;
 
+  span {
+    font-weight: 700;
+    color: var(--cool-gray);
+    transition-duration: 0.5s;
+    transition-property: color;
+    &.selected {
+      color: var(--marine-blue);
+    }
+  }
+
   .toggle {
     height: 20px;
     width: 40px;
@@ -104,12 +114,15 @@
       border-radius: 50%;
       background-color: white;
       top: 4px;
+
+      transition-duration: 0.5s;
+      transition-property: left, right;
     }
     &.left:before {
       left: 4px;
     }
     &.right:before {
-      right: 4px;
+      left: 24px;
     }
   }
 }
