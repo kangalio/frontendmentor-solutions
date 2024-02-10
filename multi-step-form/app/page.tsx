@@ -14,6 +14,7 @@ import stylesStep1 from "./Step1.module.css";
 import stylesStep2 from "./Step2.module.css";
 import stylesStep3 from "./Step3.module.css";
 import stylesStep4 from "./Step4.module.css";
+import stylesStepFinal from "./StepFinal.module.css";
 import stylesDesktopLayout from "./DesktopLayout.module.css";
 import stylesMobileLayout from "./MobileLayout.module.css";
 import stylesSelectableCard from "./SelectableCard.module.css";
@@ -111,6 +112,7 @@ type Data = {
 
   step1DisplayValidation: boolean;
   step2DisplayValidation: boolean;
+  thankYouScreen: boolean;
 };
 
 function SidebarItem({
@@ -411,6 +413,21 @@ function Step4({
   );
 }
 
+function StepFinal() {
+  let styles = stylesStepFinal;
+  return (
+    <div className={styles.root}>
+      <Image className={styles.icon} src={iconThankYou} alt="" />
+      <h1 className={styles.header}>Thank you!</h1>
+      <p className={styles.text}>
+        Thanks for confirming your subscription! We hope you have fun using our
+        platform. If you ever need support, please feel free to email us at
+        support@loremgaming.com.
+      </p>
+    </div>
+  );
+}
+
 function DesktopLayout({
   stepIndex,
   setStepIndex,
@@ -420,7 +437,7 @@ function DesktopLayout({
   stepIndex: number;
   setStepIndex: (_: number) => void;
   content: JSX.Element;
-  navButtons: JSX.Element;
+  navButtons?: JSX.Element;
 }) {
   let step = defs.steps[stepIndex];
 
@@ -441,7 +458,9 @@ function DesktopLayout({
         </div>
         <div className={styles.content}>
           {content}
-          <div className={styles.navButtons}>{navButtons}</div>
+          {navButtons ? (
+            <div className={styles.navButtons}>{navButtons}</div>
+          ) : null}
         </div>
       </div>
     </div>
@@ -457,7 +476,7 @@ function MobileLayout({
   stepIndex: number;
   setStepIndex: (_: number) => void;
   content: JSX.Element;
-  navButtons: JSX.Element;
+  navButtons?: JSX.Element;
 }) {
   let step = defs.steps[stepIndex];
 
@@ -480,7 +499,7 @@ function MobileLayout({
         ))}
       </div>
       <div className={styles.card}>{content}</div>
-      <div className={styles.bottomBar}>{navButtons}</div>
+      {navButtons ? <div className={styles.bottomBar}>{navButtons}</div> : null}
     </div>
   );
 }
@@ -549,6 +568,7 @@ export default function Card() {
 
     step1DisplayValidation: false,
     step2DisplayValidation: false,
+    thankYouScreen: false,
   });
 
   let mobileLayout = useWindowSize()[0] < 800;
@@ -561,7 +581,16 @@ export default function Card() {
   let step = defs.steps[stepIndex];
 
   let styles = stylesCard;
-  return (mobileLayout ? MobileLayout : DesktopLayout)({
+  let layout = mobileLayout ? MobileLayout : DesktopLayout;
+  if (data.thankYouScreen) {
+    return layout({
+      stepIndex,
+      setStepIndex: () => {},
+      content: <StepFinal />,
+      navButtons: undefined,
+    });
+  }
+  return layout({
     stepIndex,
     setStepIndex,
     content: (
@@ -596,7 +625,13 @@ export default function Card() {
             Next Step
           </div>
         ) : (
-          <div className={styles.confirm} onClick={() => alert("woohoo!")}>
+          <div
+            className={styles.confirm}
+            onClick={() => {
+              data.thankYouScreen = true;
+              setData({ ...data });
+            }}
+          >
             Confirm
           </div>
         )}

@@ -1,0 +1,23 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  margin-bottom: 50px;
+}
+
+.icon {
+  margin-bottom: 32px;
+}
+
+.header {
+  color: var(--marine-blue);
+}
+
+.text {
+  line-height: 1.7;
+  margin-top: 16px;
+  color: var(--cool-gray);
+}
