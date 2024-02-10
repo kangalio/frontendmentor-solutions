@@ -487,7 +487,8 @@ function MobileLayout({
 
 // https://stackoverflow.com/a/19014495/9946772
 function useWindowSize() {
-  const [size, setSize] = useState<[number, number]>([0, 0]);
+  // Use a desktop-like size so that SSR HTML doesn't jump around for desktop user majority
+  const [size, setSize] = useState<[number, number]>([1920, 1080]);
   useLayoutEffect(() => {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
