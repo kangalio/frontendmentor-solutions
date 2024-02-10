@@ -17,9 +17,10 @@
     justify-content: center;
     border: 1px solid white;
     transition-duration: 0.5s;
-    transition-property: background-color, color;
+    transition-property: background-color, color, border;
     &.numberSelected {
-      background-color: white;
+      background-color: var(--light-blue);
+      border: 1px solid var(--light-blue);
       color: black;
     }
   }
@@ -28,6 +29,7 @@
     .step {
       grid-area: step;
       font-size: 12px;
+      color: var(--pastel-blue);
     }
 
     .title {
