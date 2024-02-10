@@ -477,6 +477,33 @@ function useWindowSize() {
   return size;
 }
 
+function useStepIndex({
+  data,
+  initialStep,
+}: {
+  data: Data;
+  initialStep: number;
+}) {
+  let [stepIndex, setStepIndex] = useState(initialStep);
+  let setStepIndexIfEverythingBeforeValidates = (targetIndex: number) => {
+    for (
+      let previousStepIndex = 0;
+      previousStepIndex < targetIndex;
+      previousStepIndex++
+    ) {
+      if (previousStepIndex === 0) {
+        if (Object.keys(checkStep1Errors({ data })).length > 0) {
+          return;
+        }
+      } else if (previousStepIndex === 1) {
+        if (data.plan === undefined) return;
+      }
+    }
+    setStepIndex(targetIndex);
+  };
+  return [stepIndex, setStepIndexIfEverythingBeforeValidates] as const;
+}
+
 export default function Card() {
   let [data, setData] = useState<Data>({
     name: "",
@@ -493,7 +520,7 @@ export default function Card() {
 
   let mobileLayout = useWindowSize()[0] < 800;
 
-  let [stepIndex, setStepIndex] = useState(0);
+  let [stepIndex, setStepIndex] = useStepIndex({ data, initialStep: 0 });
   let step = defs.steps[stepIndex];
 
   let styles = stylesCard;
