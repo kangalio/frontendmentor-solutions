@@ -403,8 +403,8 @@ function Step4({
         </span>
         <span className={styles.totalPrice}>
           {data.yearlyBilling
-            ? `+$${totalPriceMonthly * 10}/yr`
-            : `+$${totalPriceMonthly}/mo`}
+            ? `$${totalPriceMonthly * 10}/yr`
+            : `$${totalPriceMonthly}/mo`}
         </span>
       </div>
     </div>
