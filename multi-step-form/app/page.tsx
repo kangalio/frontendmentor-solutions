@@ -108,6 +108,9 @@ type Data = {
   plan: (typeof defs.plans)[number]["name"] | undefined;
   addOns: { [Property in (typeof defs.addOns)[number]["name"]]: boolean };
   yearlyBilling: boolean;
+
+  step1DisplayValidation: boolean;
+  step2DisplayValidation: boolean;
 };
 
 function SidebarItem({
@@ -174,7 +177,7 @@ function checkStep1Errors({ data }: { data: Data }) {
 }
 
 function Step1({ data, setData }: { data: Data; setData: () => void }) {
-  let errors = checkStep1Errors({ data });
+  let errors = data.step1DisplayValidation ? checkStep1Errors({ data }) : {};
 
   let styles = stylesStep1;
   return (
@@ -204,7 +207,15 @@ function Step1({ data, setData }: { data: Data; setData: () => void }) {
       ].map(({ label, placeholder, getter, setter, error }) => (
         <div key={label}>
           <div className={styles.label}>{label}</div>
-          <span className={styles.error}>{error}</span>
+          {data.step1DisplayValidation ? (
+            <span
+              className={
+                styles.validation + " " + (error ? styles.error : styles.ok)
+              }
+            >
+              {error ?? "Ok"}
+            </span>
+          ) : null}
           <input
             className={styles.input + (error ? " " + styles.isError : "")}
             onChange={(e) => {
@@ -229,6 +240,9 @@ function Step2({
   setData: () => void;
   mobileLayout: boolean;
 }) {
+  let complainAboutNoSelection =
+    data.step2DisplayValidation && data.plan === undefined;
+
   let styles = stylesStep2;
   return (
     <div className={styles.root}>
@@ -479,29 +493,35 @@ function useWindowSize() {
 
 function useStepIndex({
   data,
+  setData,
   initialStep,
 }: {
   data: Data;
+  setData: () => void;
   initialStep: number;
 }) {
   let [stepIndex, setStepIndex] = useState(initialStep);
-  let setStepIndexIfEverythingBeforeValidates = (targetIndex: number) => {
-    for (
-      let previousStepIndex = 0;
-      previousStepIndex < targetIndex;
-      previousStepIndex++
-    ) {
-      if (previousStepIndex === 0) {
+  let setStepIndexIfValidates = (targetIndex: number) => {
+    if (targetIndex > stepIndex) {
+      if (stepIndex === 0) {
         if (Object.keys(checkStep1Errors({ data })).length > 0) {
+          data.step1DisplayValidation = true;
+          setData();
           return;
         }
-      } else if (previousStepIndex === 1) {
-        if (data.plan === undefined) return;
+      } else if (stepIndex === 1) {
+        if (data.plan === undefined) {
+          data.step2DisplayValidation = true;
+          setData();
+          return;
+        }
       }
     }
+    if (stepIndex === 0) data.step1DisplayValidation = false;
+    else if (stepIndex === 1) data.step2DisplayValidation = false;
     setStepIndex(targetIndex);
   };
-  return [stepIndex, setStepIndexIfEverythingBeforeValidates] as const;
+  return [stepIndex, setStepIndexIfValidates] as const;
 }
 
 export default function Card() {
@@ -516,11 +536,18 @@ export default function Card() {
       "Customizable profile": false,
     },
     yearlyBilling: false,
+
+    step1DisplayValidation: false,
+    step2DisplayValidation: false,
   });
 
   let mobileLayout = useWindowSize()[0] < 800;
 
-  let [stepIndex, setStepIndex] = useStepIndex({ data, initialStep: 0 });
+  let [stepIndex, setStepIndex] = useStepIndex({
+    data,
+    setData: () => setData({ ...data }),
+    initialStep: 0,
+  });
   let step = defs.steps[stepIndex];
 
   let styles = stylesCard;
