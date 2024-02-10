@@ -16,6 +16,8 @@
     align-items: center;
     justify-content: center;
     border: 1px solid white;
+    transition-duration: 0.5s;
+    transition-property: background-color, color;
     &.numberSelected {
       background-color: white;
       color: black;
@@ -34,5 +36,11 @@
       font-size: 14px;
       letter-spacing: 0.06em;
     }
+  }
+
+  transition-duration: 0.2s;
+  transition-property: opacity;
+  &:hover {
+    opacity: 0.8;
   }
 }

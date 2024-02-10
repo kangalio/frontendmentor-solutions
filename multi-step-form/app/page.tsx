@@ -534,9 +534,10 @@ function useStepIndex({
 
 export default function Card() {
   let [data, setData] = useState<Data>({
-    name: "",
-    email: "",
-    phone: "",
+    // REMEMBER
+    name: "ur mom",
+    email: "brian@cia.gov",
+    phone: "+12345",
     plan: undefined,
     addOns: {
       "Online service": false,

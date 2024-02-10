@@ -25,6 +25,7 @@
       color: var(--cool-gray);
       text-decoration: underline;
       font-size: 14px;
+      cursor: pointer;
     }
 
     .planPrice {

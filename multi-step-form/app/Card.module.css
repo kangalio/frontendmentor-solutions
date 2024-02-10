@@ -52,5 +52,9 @@
     background-color: var(--purplish-blue);
     color: white;
     margin-left: auto;
+
+    &:hover {
+      background-color: #5850ff;
+    }
   }
 }

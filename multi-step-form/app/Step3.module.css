@@ -12,6 +12,8 @@
   align-items: center;
 
   .checkbox {
+    transition-property: border, background-color;
+    transition-duration: 0.2s;
     border: 1px solid var(--light-gray);
   }
   &.checked {
