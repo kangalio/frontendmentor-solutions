@@ -517,7 +517,7 @@ function MobileLayout({
   return (
     <div className={styles.root}>
       <div className={styles.sidebarBackground}>
-        <Image src="./bg-sidebar-mobile.svg" fill alt="" />
+        <Image src="./multi-step-form/bg-sidebar-mobile.svg" fill alt="" />
       </div>
       <div className={styles.sidebar}>
         {defs.steps.map((step, i) => (
@@ -590,10 +590,12 @@ function useStepIndex({
 
 export default function Card() {
   let [data, setData] = useState<Data>({
-    // REMEMBER
-    name: "ur mom",
-    email: "brian@cia.gov",
-    phone: "+12345",
+    // name: "ur mom",
+    // email: "brian@cia.gov",
+    // phone: "+12345",
+    name: "",
+    email: "",
+    phone: "",
     plan: undefined,
     addOns: {
       "Online service": false,
