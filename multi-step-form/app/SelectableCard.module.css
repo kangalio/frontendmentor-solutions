@@ -1,4 +1,9 @@
 .root {
+  font: unset;
+  text-align: unset;
+  background-color: unset;
+  border: unset;
+
   padding: 16px;
   border-radius: 8px;
   border: 1px solid var(--light-gray);

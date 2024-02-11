@@ -20,6 +20,11 @@
     }
 
     .changePlan {
+      font: unset;
+      border: unset;
+      text-align: unset;
+      background: unset;
+
       grid-area: change;
       margin-top: 4px;
       color: var(--cool-gray);

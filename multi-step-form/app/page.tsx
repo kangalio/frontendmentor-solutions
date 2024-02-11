@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import iconArcade from "./images/icon-arcade.svg";
 import iconAdvanced from "./images/icon-advanced.svg";
@@ -31,7 +31,9 @@ const defs = {
         setData: () => void,
         setStepIndex: (_: number) => void,
         mobileLayout: boolean
-      ) => <Step1 data={data} setData={setData} />,
+      ) => (
+        <Step1 data={data} setData={setData} submit={() => setStepIndex(1)} />
+      ),
     },
     {
       sidebarName: "SELECT PLAN",
@@ -130,7 +132,7 @@ function SidebarItem({
 }) {
   let styles = stylesSidebarItem;
   return (
-    <div className={styles.sidebarItem} onClick={onclick}>
+    <button className={styles.sidebarItem} onClick={onclick}>
       <div
         className={
           styles.number + (selected ? " " + styles.numberSelected : "")
@@ -144,7 +146,7 @@ function SidebarItem({
           <div className={styles.title}>{title}</div>
         </div>
       )}
-    </div>
+    </button>
   );
 }
 
@@ -178,59 +180,85 @@ function checkStep1Errors({ data }: { data: Data }) {
   return errors;
 }
 
-function Step1({ data, setData }: { data: Data; setData: () => void }) {
+function Step1({
+  data,
+  setData,
+  submit,
+}: {
+  data: Data;
+  setData: () => void;
+  submit: () => void;
+}) {
   let errors = data.step1DisplayValidation ? checkStep1Errors({ data }) : {};
+  let inputs = [
+    {
+      label: "Name",
+      placeholder: "e.g. Stephen King",
+      getter: data.name,
+      setter: (x: string) => (data.name = x),
+      error: errors.name,
+      inputRef: useRef<HTMLInputElement>(null),
+    },
+    {
+      label: "Email Address",
+      placeholder: "e.g. stephenking@lorem.com",
+      getter: data.email,
+      setter: (x: string) => (data.email = x),
+      error: errors.email,
+      inputRef: useRef(null),
+    },
+    {
+      label: "Phone Number",
+      placeholder: "e.g. +1 234 567 890",
+      getter: data.phone,
+      setter: (x: string) => (data.phone = x),
+      error: errors.phone,
+      inputRef: useRef(null),
+    },
+  ];
 
   let styles = stylesStep1;
   return (
     <div className={styles.inputs}>
-      {[
-        {
-          label: "Name",
-          placeholder: "e.g. Stephen King",
-          getter: data.name,
-          setter: (x: string) => (data.name = x),
-          error: errors.name,
-        },
-        {
-          label: "Email Address",
-          placeholder: "e.g. stephenking@lorem.com",
-          getter: data.email,
-          setter: (x: string) => (data.email = x),
-          error: errors.email,
-        },
-        {
-          label: "Phone Number",
-          placeholder: "e.g. +1 234 567 890",
-          getter: data.phone,
-          setter: (x: string) => (data.phone = x),
-          error: errors.phone,
-        },
-      ].map(({ label, placeholder, getter, setter, error }) => (
-        <div key={label}>
-          <div className={styles.label}>{label}</div>
-          <span
-            className={
-              styles.validation +
-              (data.step1DisplayValidation
-                ? " " + (error ? styles.error : styles.ok)
-                : "")
-            }
-          >
-            {/* {data.step1DisplayValidation ? error ?? "Ok" : ""} */}
-            {data.step1DisplayValidation ? error ?? "" : ""}
-          </span>
-          <input
-            className={styles.input + (error ? " " + styles.isError : "")}
-            onChange={(e) => {
-              setter(e.target.value);
-              setData();
+      {inputs.map(
+        ({ label, placeholder, getter, setter, error, inputRef }, i) => (
+          <div
+            key={label}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                if (e.ctrlKey || inputs[i + 1] === undefined) {
+                  submit();
+                } else {
+                  inputs[i + 1].inputRef.current?.select();
+                }
+              }
             }}
-            value={getter}
-            placeholder={placeholder}
-          ></input>
-        </div>
-      ))}
+          >
+            <div className={styles.label}>{label}</div>
+            <span
+              className={
+                styles.validation +
+                (data.step1DisplayValidation
+                  ? " " + (error ? styles.error : styles.ok)
+                  : "")
+              }
+            >
+              {/* {data.step1DisplayValidation ? error ?? "Ok" : ""} */}
+              {data.step1DisplayValidation ? error ?? "" : ""}
+            </span>
+            <input
+              ref={inputRef}
+              className={styles.input + (error ? " " + styles.isError : "")}
+              onChange={(e) => {
+                setter(e.target.value);
+                setData();
+              }}
+              value={getter}
+              placeholder={placeholder}
+            ></input>
+          </div>
+        )
+      )}
     </div>
   );
 }
@@ -261,7 +289,7 @@ function Step2({
         className={styles.plans + (mobileLayout ? " " + styles.vertical : "")}
       >
         {defs.plans.map((plan, i) => (
-          <div
+          <button
             key={i}
             className={
               styles.plan +
@@ -287,7 +315,7 @@ function Step2({
                 <span className={styles.nMonthsFree}>2 months free</span>
               ) : null}
             </div>
-          </div>
+          </button>
         ))}
       </div>
       <div
@@ -323,7 +351,7 @@ function Step3({ data, setData }: { data: Data; setData: () => void }) {
     <div>
       <div>
         {defs.addOns.map(({ name, description, priceMonthly }) => (
-          <div
+          <button
             className={
               styles.addOn +
               (" " + stylesSelectableCard.root) +
@@ -347,7 +375,7 @@ function Step3({ data, setData }: { data: Data; setData: () => void }) {
                 ? `+$${priceMonthly * 10}/yr`
                 : `+$${priceMonthly}/mo`}
             </span>
-          </div>
+          </button>
         ))}
       </div>
     </div>
@@ -375,9 +403,9 @@ function Step4({
           <span className={styles.planName}>
             {data.plan} ({data.yearlyBilling ? "Yearly" : "Monthly"})
           </span>
-          <span className={styles.changePlan} onClick={onChangePlan}>
+          <button className={styles.changePlan} onClick={onChangePlan}>
             Change
-          </span>
+          </button>
           <span className={styles.planPrice}>
             {data.yearlyBilling
               ? `$${plan.priceMonthly * 10}/yr`
@@ -618,22 +646,22 @@ export default function Card() {
     navButtons: (
       <div className={styles.navButtons}>
         {stepIndex !== 0 ? (
-          <div
+          <button
             className={styles.prevStep}
             onClick={() => setStepIndex(stepIndex - 1)}
           >
             Go Back
-          </div>
+          </button>
         ) : null}
         {stepIndex !== 3 ? (
-          <div
+          <button
             className={styles.nextStep}
             onClick={() => setStepIndex(stepIndex + 1)}
           >
             Next Step
-          </div>
+          </button>
         ) : (
-          <div
+          <button
             className={styles.confirm}
             onClick={() => {
               data.thankYouScreen = true;
@@ -641,7 +669,7 @@ export default function Card() {
             }}
           >
             Confirm
-          </div>
+          </button>
         )}
       </div>
     ),

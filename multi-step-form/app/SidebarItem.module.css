@@ -1,4 +1,9 @@
 .sidebarItem {
+  border: unset;
+  font: unset;
+  background: unset;
+  text-align: unset;
+
   display: flex;
   flex-direction: row;
   gap: 16px;
