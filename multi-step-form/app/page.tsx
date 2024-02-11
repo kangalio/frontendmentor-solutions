@@ -217,7 +217,8 @@ function Step1({ data, setData }: { data: Data; setData: () => void }) {
                 : "")
             }
           >
-            {data.step1DisplayValidation ? error ?? "Ok" : ""}
+            {/* {data.step1DisplayValidation ? error ?? "Ok" : ""} */}
+            {data.step1DisplayValidation ? error ?? "" : ""}
           </span>
           <input
             className={styles.input + (error ? " " + styles.isError : "")}
