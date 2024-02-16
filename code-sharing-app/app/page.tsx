@@ -1,95 +1,65 @@
 import Image from "next/image";
-import styles from "./page.module.css";
 
-export default function Home() {
+// import styles from "./page.module.css";
+import background from "./images/Hero-Background-notecode.svg";
+import noteCodeLogo from "./images/NoteCodeLogo.svg";
+import { useSearchParams } from "next/navigation";
+import Card from "./Card";
+import { readFile } from "fs/promises";
+import path from "path";
+
+let defaultInitialCode = `<html>
+<head>
+  <title>HTML Sample</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <style type="text/css">
+    h1 {
+      color: #CCA3A3;
+    }
+  </style>
+  <script type="text/javascript">
+    alert("I am a sample... visit devChallengs.io for more projects");
+  </script>
+</head>
+<body>
+  <h1>Heading No.1</h1>
+  <input disabled type="button" value="Click me" />
+</body>
+</html>`;
+
+function safeJoin(base: string, child: string) {
+  let joined = path.join(base, child);
+  if (!joined.startsWith(base + "/"))
+    throw new Error("attempted directory traversal");
+  return joined;
+}
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [_: string]: string };
+}) {
+  let snippetId = searchParams.id;
+  let initialCode = snippetId
+    ? (await readFile(safeJoin("snippets", snippetId))).toString()
+    : defaultInitialCode;
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main
+      className={`column`}
+      style={{
+        backgroundImage:
+          `url(${background.src}),` +
+          `linear-gradient(to bottom right, #b787f5, #743ee4)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPositionX: "center",
+        height: "100vh",
+      }}
+    >
+      <Image style={{ margin: "32px" }} src={noteCodeLogo} alt="logo" />
+      <h1 style={{ fontSize: "2rem" }}>Create & Share</h1>
+      <h1 style={{ fontSize: "2.5rem" }}>Your Code easily</h1>
+      <Card initialCode={initialCode} />
     </main>
   );
 }

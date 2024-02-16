@@ -1,0 +1,21 @@
+.codeCard {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-top: 32px;
+  margin-bottom: 64px;
+  width: calc(min(900px, 100% - 24px));
+
+  border-radius: 16px;
+  padding: 16px;
+  background-color: white;
+
+  box-shadow: #0002 0 0 30px;
+}
+
+.codeCard:first {
+  flex-grow: 1;
+}
