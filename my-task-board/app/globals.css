@@ -3,3 +3,11 @@
   padding: 0;
   margin: 0;
 }
+
+input,
+textarea,
+button {
+  font: unset;
+  border: unset;
+  background: unset;
+}
