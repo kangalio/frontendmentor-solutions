@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    #body {
+        width: 666px;
+        /* height: 600px; */
+        background-color: #111111;
+        color: #ffffff;
+        font-family: sans-serif;
+
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .frame {
+        background-color: #212121;
+        border-radius: 3px;
+        margin: 12px;
+        padding: 16px;
+        display: inline-block;
+    }
+    .half-size {
+        flex: 4.2069%;
+    }
+    .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+    .name {
+        font-weight: bold;
+    }
+    .role {
+        color: #aaa;
+    }
+    .avatar {
+        border-radius: 50%;
+        border: 2px solid #4d4d4d;
+    }
+    .description {
+        display: inline-block;
+        margin-left: 16px;
+    }
+    .name, .role {
+        display: block;
+    }
+    h1 {
+        margin: 0;
+        line-height: 1.2;
+        margin-bottom: 16px;
+    }
+    p {
+        margin: 0;
+        line-height: 1.8;
+    }
+</style>
+</head>
+<body>
+    <div id="body">
+        <div class="frame half-size">
+            <div class="header">
+                <img class="avatar" src="https://i.pravatar.cc/50?img=0"/>
+                <div class="description">
+                    <span class="name">Emma Watson</span>
+                    <span class="role">Sales & Marketing</span>
+                </div>
+            </div>
+            <h1>LOREM IPSUM DOLOR SIT AMET</h1>
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore laborum ea libero fugiat iusto molestias saepe molestiae, minima animi, vel excepturi ad? Mollitia, quo exercitationem.
+            </p>
+        </div>
+        <div class="frame half-size">
+            <div class="header">
+                <img class="avatar" src="https://i.pravatar.cc/50?img=1"/>
+                <div class="description">
+                    <span class="name">Justin Green</span>
+                    <span class="role">UI & UX</span>
+                </div>
+            </div>
+            <h1>VERO RATIONE QUIDEM TEMPORA QUAE</h1>
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore laborum ea libero fugiat iusto molestias saepe molestiae, minima animi, vel excepturi ad? Mollitia, quo exercitationem.
+            </p>
+        </div>
+        <div class="frame">
+            <div class="header">
+                <img class="avatar" src="https://i.pravatar.cc/50?img=2"/>
+                <div class="description">
+                    <span class="name">Silvio Johnston</span>
+                    <span class="role">Developer</span>
+                </div>
+            </div>
+            <h1>ATQUE FACILIS AUT NEMO</h1>
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore laborum ea libero fugiat iusto molestias saepe molestiae, minima animi, vel excepturi ad? Mollitia, quo exercitationem.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
